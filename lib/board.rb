@@ -17,13 +17,14 @@ class Board
   def winner
     win_moves = [
       [[0,0],[0,1],[0,2]], #top row
-      [[1,0],[1,1],[1,2]],
-      [[2,0],[2,1],[2,2]],
-      [[0,0],[1,1],[2,2]],
-      [[0,1],[1,1],[2,1]],
-      [[0,2],[1,1],[2,0]]
+      [[1,0],[1,1],[1,2]], #second row
+      [[2,0],[2,1],[2,2]], #thrid row
+      [[0,0],[1,1],[2,2]], #left diagonal
+      [[0,1],[1,1],[2,1]], #second col
+      [[0,2],[1,1],[2,0]], #right diagonal
+      [[0,0],[1,0],[2,0]], #First col
+      [[0,2],[1,2],[2,2]]  #third col
     ]
-
     win_moves.each do |combination|
       return :X if combination.all? { |el| grid[el[0]][el[1]] == :X }
       return :O if combination.all? { |el| grid[el[0]][el[1]] == :O }
@@ -36,5 +37,6 @@ class Board
   end
 
   def over?
+    return true if winner == :X || winner == :O || grid.all? { |el| el.include?(:X) || el.include?(:O) }
   end
 end
