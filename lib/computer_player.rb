@@ -27,7 +27,7 @@ class ComputerPlayer
     else
       pos0 = rand(3)
       pos1 = rand(3)
-      while @board.empty?([pos0,pos1]) && @board.grid[pos0][pos1] == :X
+      until @board.empty?([pos0,pos1]) && @board.grid[pos0][pos1] != :X
         pos0 = rand(3)
         pos1 = rand(3)
         # return [pos0,pos1]
