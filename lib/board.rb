@@ -1,3 +1,4 @@
+require 'byebug'
 class Board
   attr_reader :grid
 
@@ -12,6 +13,7 @@ class Board
 
   def empty?(pos)
     return true unless grid[pos[0]][pos[1]]
+    return false
   end
 
   def winner
@@ -37,6 +39,7 @@ class Board
   end
 
   def over?
-    return true if winner == :X || winner == :O || grid.all? { |el| el.include?(:X) || el.include?(:O) }
+    return true if winner == :X || winner == :O || grid.all? { |el| el.all? { |cell| cell == :X || cell == :O} }
+    return false
   end
 end

@@ -2,7 +2,7 @@ require_relative 'board'
 require 'byebug'
 
 class ComputerPlayer
-  attr_reader :name, :board
+  attr_accessor :name, :board
   attr_accessor :mark
   def initialize(name, mark = :O)
     @name = name
@@ -11,18 +11,26 @@ class ComputerPlayer
 
   def display(board)
     @board = board
+    puts ""
+    puts " #{@board.grid[0][0]} | #{@board.grid[0][1]} | #{@board.grid[0][2]} "
+    puts "_________"
+    puts " #{@board.grid[1][0]} | #{@board.grid[1][1]} | #{@board.grid[1][2]} "
+    puts "_________"
+    puts " #{@board.grid[2][0]} | #{@board.grid[2][1]} | #{@board.grid[2][2]} "
+    puts ""
   end
 
   def get_move
+    # debugger
     if winning_move
       winning_move
     else
       pos0 = rand(3)
       pos1 = rand(3)
-      until board.grid[pos0][pos1] != nil
+      while @board.empty?([pos0,pos1]) && @board.grid[pos0][pos1] == :X
         pos0 = rand(3)
         pos1 = rand(3)
-        return [pos0,pos1]
+        # return [pos0,pos1]
       end
       return [pos0,pos1]
     end
@@ -41,8 +49,9 @@ class ComputerPlayer
       [[0,2],[1,2],[2,2]]  #third col
     ]
     win_moves.each do |combination|
-      if (combination.select { |pos| board.grid[pos[0]][pos[1]] == mark }).count == 2
-        return (combination.select { |pos| board.grid[pos[0]][pos[1]] == nil }).flatten
+      # debugger
+      if (combination.select { |pos| @board.grid[pos[0]][pos[1]] == :O && combination.all? { |el| @board.grid[el[0]][el[1]] != :X } }).count == 2
+        return (combination.select { |pos| @board.grid[pos[0]][pos[1]] == nil }).flatten
       end
     end
     return nil
