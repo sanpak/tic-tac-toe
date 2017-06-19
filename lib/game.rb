@@ -15,6 +15,11 @@ class Game
   def play_turn
     # debugger
     move = @current_player.get_move
+    #In a game situation, can't allow human players to mark the ":O" position
+    # while @board.grid[move[0]][move[1]] != nil
+    #   puts "Invalid move"
+    #   move = @current_player.get_move
+    # end
     @board.place_mark(move,@current_player.mark)
     switch_players!
   end
